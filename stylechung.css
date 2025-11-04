@@ -1,0 +1,25 @@
+.card img {
+  height: 200px;
+  object-fit: cover;
+  transition: 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card-body h5 {
+  color: #222;
+}
+
+.card-body p {
+  margin-bottom: 4px;
+}
+
+.badge {
+  font-size: 0.75rem;
+}
+
+del {
+  color: #999;
+}
