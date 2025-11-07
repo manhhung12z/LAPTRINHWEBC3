@@ -391,6 +391,18 @@ function closeGuestBox() {
 document.addEventListener('click', (e) => {
   if (!guestSelector.contains(e.target)) guestBox.style.display = 'none';
 });
+//yêu cầu nhập ngày trả và ngày nhận 
+
+document.querySelector('.search-bar').addEventListener('submit', function(e) {
+  const checkin = document.getElementById('checkin').value.trim();
+  const checkout = document.getElementById('checkout').value.trim();
+
+  if (!checkin || !checkout) {
+    e.preventDefault(); // chặn submit
+    alert('Vui lòng chọn ngày nhận và ngày trả phòng!');
+  }
+});
+
 
 </script>
 </body>
