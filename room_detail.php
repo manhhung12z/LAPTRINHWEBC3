@@ -13,7 +13,7 @@ if (!$maphong) {
 }
 
 // --- TRUY VẤN THÔNG TIN PHÒNG ---
-$sql = "SELECT p.MaPhong, lp.TenLoai, p.Gia, lp.SoNguoiToiDa, lp.MoTa, p.TrangThai
+$sql = "SELECT p.MaPhong, lp.TenLoai, p.Gia, lp.SoNguoiToiDa, lp.MoTa, p.TrangThai,image
         FROM phong p
         JOIN loaiphong lp ON p.MaLoai = lp.MaLoai
         WHERE p.MaPhong = '$maphong'";
@@ -23,6 +23,18 @@ $room = $result->fetch_assoc();
 if (!$room) {
     echo "<h3>Không tìm thấy thông tin phòng.</h3>";
     exit;
+}
+if ($checkin && $checkout) {
+    $sql1 ="select * from Datphong where MaPhong ='$maphong' and '$checkin' < NgayTra AND '$checkout' > NgayNhan";
+    $result1=$conn->query($sql1);
+    if($result1->num_rows>0)
+    {
+        $room['TrangThai'] = 'Đã đặt';
+    }     
+    else 
+    {
+        $room['TrangThai'] = 'Trống';
+    }
 }
 ?>
 
@@ -46,10 +58,10 @@ footer { background: #003580; color: white; text-align: center; padding: 15px; m
 <body>
 
 <div class="container">
-  <a href="rooms.php" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Quay lại danh sách phòng</a>
+  <a href="rooms.php?checkin=<?Php echo $checkin?>&checkout=<?php echo $checkout?> " class="text-decoration-none"><i class="bi bi-arrow-left"></i> Quay lại danh sách phòng</a>
   <div class="row mt-4">
     <div class="col-md-6">
-      <img src="assets/images/default.jpg" alt="Phòng" class="room-img">
+      <img src="<?php echo $room['image']?>" alt="Phòng" class="room-img">
     </div>
     <div class="col-md-6">
       <div class="detail-box">

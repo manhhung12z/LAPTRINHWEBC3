@@ -10,25 +10,27 @@ $loaiphong = $_GET['loaiphong'] ?? '';
 $giatoida = $_GET['giatoida'] ?? '';
 
 // Câu SQL cơ bản: chỉ lấy phòng chưa bị đặt trong khoảng thời gian đó
-$sql = "SELECT p.MaPhong, p.Gia, p.TrangThai, lp.TenLoai, lp.SoNguoiToiDa, lp.MoTa
+$sql = "SELECT p.MaPhong, p.Gia, lp.TenLoai, lp.SoNguoiToiDa, lp.MoTa,image,
+        Case
+         when p.MaPhong in (SELECT MaPhong FROM datphong
+            WHERE ('$checkin' < NgayTra AND '$checkout' > NgayNhan))
+        then 'Đã đặt'
+        else 'Trống'
+        end as TrangThai
         FROM phong p
         JOIN loaiphong lp ON p.MaLoai = lp.MaLoai
-        WHERE p.MaPhong NOT IN (
-            SELECT MaPhong FROM datphong
-            WHERE ('$checkin' < NgayTra AND '$checkout' > NgayNhan)
-        )";
+        WHERE 1=1 " ;
 
 // Thêm điều kiện lọc động
-if (!empty($songuoi)) {
-    $sql .= " AND lp.SoNguoiToiDa >= " . intval($songuoi);
-}
 if (!empty($loaiphong)) {
-    $sql .= " AND lp.MaLoai = '" . $conn->real_escape_string($loaiphong) . "'";
+    $sql .= " AND lp.TenLoai = '" . $conn->real_escape_string($loaiphong) . "'";
+}
+if (!empty($songuoi)) {
+    $sql .= " AND lp.SoNguoiToiDa = " . intval($songuoi);
 }
 if (!empty($giatoida)) {
     $sql .= " AND p.Gia <= " . intval($giatoida);
 }
-
 // Thực thi truy vấn
 $result = $conn->query($sql);
 ?>
@@ -125,6 +127,15 @@ body {
               <option value="3" <?= $songuoi == 3 ? 'selected' : '' ?>>3 người</option>
               <option value="4" <?= $songuoi == 4 ? 'selected' : '' ?>>4 người</option>
             </select>
+            </div>
+             <div class="mb-3">
+            <label class="form-label">Phòng</label>
+            <select class="form-select" name="loaiphong">
+              <option value="">Tất cả</option>
+              <option value="Phòng Đơn" <?= $songuoi == 'Phòng Đơn' ? 'selected' : '' ?>>Phòng Đơn</option>
+              <option value="Phòng Đôi" <?= $songuoi == 'Phòng Đôi' ? 'selected' : '' ?>>Phòng Đôi</option>
+              <option value="Phòng Gia Đình" <?= $songuoi == 'Phòng Gia Đình' ? 'selected' : '' ?>>Phòng Gia Đình</option>
+            </select>
           </div>
 
           <div class="d-grid">
@@ -132,7 +143,7 @@ body {
           </div>
         </form>
       </div>
-    </div>
+      </div>
 
     <!-- Danh sách phòng -->
     <div class="col-md-9">
@@ -140,7 +151,7 @@ body {
       <?php if ($result && $result->num_rows > 0): ?>
         <?php while ($row = $result->fetch_assoc()): ?>
         <div class="room-card">
-          <img src="assets/images/default.jpg" alt="Phòng">
+          <img src="<?php echo $row['image'] ?>" alt="Phòng">
           <div class="flex-grow-1">
             <h5 class="text-primary"><?= htmlspecialchars($row['TenLoai']) ?></h5>
             <p class="mb-1">Mã phòng: <b><?= htmlspecialchars($row['MaPhong']) ?></b></p>
@@ -152,7 +163,7 @@ body {
           </div>
           <div class="text-end">
             <div class="price mb-2"><?= number_format($row['Gia']) ?> VNĐ/đêm</div>
-<a href="room_detail.php?id=<?= $row['MaPhong'] ?>" class="btn btn-primary">Xem chi tiết</a>
+<a href="room_detail.php?id=<?= $row['MaPhong'] ?>&checkin=<?php echo $checkin ?>&checkout=<?php echo $checkout ?>" class="btn btn-primary">Xem chi tiết</a>
           </div>
         </div>
         <?php endwhile; ?>

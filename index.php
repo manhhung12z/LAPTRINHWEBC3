@@ -226,14 +226,53 @@ footer {
 
   <button type="submit" class="search-btn">Tìm</button>
 </form>
+<!-- vì sao nên đặt trên hotel -->
+<section class="container my-5">
+  <h2 class="fw-bold mb-4 text-center">Vì sao nên đặt trên Hotel Booking?</h2>
+  <div class="row g-4">
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0 text-center p-3">
+        <img src="https://img.icons8.com/color/96/000000/calendar--v1.png" alt="Đặt phòng linh hoạt" class="mb-3" width="60">
+        <h5 class="fw-bold">Đặt phòng linh hoạt</h5>
+        <p class="text-muted">Thanh toán tại nơi, đặt phòng và hủy phòng một cách tiện lợi</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0 text-center p-3">
+        <img src="https://img.icons8.com/color/96/000000/facebook-like.png" alt="Đánh giá thực tế" class="mb-3" width="60">
+        <h5 class="fw-bold">Đánh giá thực tế tốt</h5>
+        <p class="text-muted">Hơn 2 triệu đánh giá từ các khách du lịch, được nhiều người tin tưởng</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0 text-center p-3">
+        <img src="https://img.icons8.com/color/96/000000/globe-earth.png" alt="Mạng lưới toàn cầu" class="mb-3" width="60">
+        <h5 class="fw-bold">Mạng lưới toàn quốc</h5>
+        <p class="text-muted">Đa dạng chỗ nghỉ tại khắp nơi, tha hồ lựa chọn</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0 text-center p-3">
+        <img src="https://img.icons8.com/color/96/000000/customer-support.png" alt="Hỗ trợ 24/7" class="mb-3" width="60">
+        <h5 class="fw-bold">Hỗ trợ khách hàng 24/7</h5>
+        <p class="text-muted">Luôn sẵn sàng trợ giúp và giải đáp thắc mắc của bạn mọi lúc, mọi nơi</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- PROMO SECTION -->
 <section class="promo-section container">
   <h2>Ưu đãi cho cuối tuần</h2>
   <p>Khám phá những phòng nghỉ có giá tốt nhất cho cuối tuần này!</p>
-  <div class="row g-4">
+  <div class="row g-4 justify-content-center">
     <?php
-    $promo_sql = "SELECT p.MaPhong, lp.TenLoai, p.Gia, lp.SoNguoiToiDa 
+    $promo_sql = "SELECT p.MaPhong, lp.TenLoai, p.Gia, lp.SoNguoiToiDa,image
               FROM phong p 
               JOIN loaiphong lp ON p.MaLoai = lp.MaLoai 
               WHERE p.TrangThai = 'Trống'
@@ -246,7 +285,7 @@ footer {
     ?>
     <div class="col-md-3">
       <div class="promo-card">
-<img src="assets/images/default.jpg" 
+<img src="<?php echo $promo['image']?>" 
      alt="Phòng" 
      class="w-100" 
      style="height:200px;object-fit:cover;border-radius:10px 10px 0 0;">
