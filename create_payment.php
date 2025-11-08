@@ -58,7 +58,11 @@ $session = \Stripe\Checkout\Session::create([
                      '&email=' . urlencode($email) .
                      '&checkin=' . urlencode($checkin) .
                      '&checkout=' . urlencode($checkout),
-    'cancel_url'  => 'http://localhost/LAPTRINHWEBC3/payment_cancel.php',
+    'cancel_url'  => 'http://localhost/LAPTRINHWEBC3/booking.php?room=' . urlencode($maphong) .
+                 '&checkin=' . urlencode($checkin) .
+                 '&checkout=' . urlencode($checkout) .
+                 '&songuoi=' . urlencode($songuoi),
+
 ]);
 
 header("Location: " . $session->url);
