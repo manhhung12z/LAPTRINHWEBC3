@@ -29,10 +29,19 @@ if (!$room) {
 <meta charset="UTF-8">
 <title>Đặt phòng - <?= htmlspecialchars($room['TenLoai']) ?></title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 <body style="background-color:#f8f9fa;">
 <div class="container mt-5">
+  <a href="room_detail.php?id=<?= urlencode($maphong) ?>&checkin=<?= urlencode($checkin) ?>&checkout=<?= urlencode($checkout) ?>&songuoi=<?= urlencode($songuoi) ?>" 
+   class="text-decoration-none d-inline-block mb-3" 
+   style="color:#0071c2; font-weight:500;">
+   <i class="bi bi-arrow-left"></i> Quay lại chi tiết phòng
+</a>
   <div class="card shadow p-4">
+    
+
     <h3 class="mb-3 text-primary">Đặt phòng: <?= htmlspecialchars($room['TenLoai']) ?> (<?= $room['MaPhong'] ?>)</h3>
     <p><b>Sức chứa tối đa:</b> <?= $room['SoNguoiToiDa'] ?> người</p>
     <p><b>Giá phòng:</b> <?= number_format($room['Gia']) ?> VNĐ / đêm</p>
