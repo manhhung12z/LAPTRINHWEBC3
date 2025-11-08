@@ -9,7 +9,25 @@ $checkin = $_POST['checkin'];
 $checkout = $_POST['checkout'];
 $hoten = $_POST['hoten'];
 $email = $_POST['email'];
+$songuoi = $_POST['songuoi'];
+$sdt=$_POST['sdt'];
+//inport sau khi ấn nút thanh toán se lưu vào datphong
+$result = $conn->query("SELECT COUNT(*) AS total FROM khachhang");
+$row = $result->fetch_assoc();
+$makh = 'KH' . str_pad($row['total'] + 1, 3, '0', STR_PAD_LEFT);
 
+//insert vào khachhang
+$stmt1 = $conn->prepare("INSERT INTO khachhang (MaKH, HoTen, Email, SDT) VALUES (?, ?, ?, ?)");
+$stmt1->bind_param("ssss", $makh, $hoten, $email, $sdt);
+$stmt1->execute();
+
+$result2 = $conn->query("SELECT COUNT(*) AS total FROM datphong");
+$row2 = $result2->fetch_assoc();
+$madatphong = 'DP' . str_pad($row2['total'] + 1, 3, '0', STR_PAD_LEFT);
+
+$stmt2 = $conn->prepare("insert into datphong(MaDatPhong,NgayNhan,NgayTra,SoNguoi,MaKH,MaPhong) values(?,?,?,?,?,?)");
+$stmt2->bind_param("ssssss",$madatphong,$checkin,$checkout,$songuoi,$makh,$maphong);
+$stmt2->execute();
 // Lấy thông tin phòng
 $room = $conn->query("SELECT * FROM phong WHERE MaPhong='$maphong'")->fetch_assoc();
 
@@ -34,7 +52,9 @@ $session = \Stripe\Checkout\Session::create([
     'mode' => 'payment',
     'customer_email' => $email,
     'success_url' => 'http://localhost/LAPTRINHWEBC3/payment_success.php?room=' . $maphong .
+                     '&session_id={CHECKOUT_SESSION_ID}' .
                      '&hoten=' . urlencode($hoten) .
+                     '&madatphong=' . urlencode($madatphong) .
                      '&email=' . urlencode($email) .
                      '&checkin=' . urlencode($checkin) .
                      '&checkout=' . urlencode($checkout),

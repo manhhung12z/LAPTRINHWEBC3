@@ -86,6 +86,7 @@ footer { background: #003580; color: white; text-align: center; padding: 15px; m
           <input type="hidden" name="room" value="<?= $room['MaPhong'] ?>">
           <input type="hidden" name="checkin" value="<?= $checkin ?>">
           <input type="hidden" name="checkout" value="<?= $checkout ?>">
+          <input type="hidden" name="songuoi" value="<?= $songuoi ?>">
 
           <button type="submit" class="btn btn-book w-100">Tiếp tục đặt phòng</button>
         </form>

@@ -1,10 +1,12 @@
 <?php
+include 'db_connect.php';
 require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+\Stripe\Stripe::setApiKey('sk_test_51SQ6iL0HaSJZxzXQoW2VW6li9krsjj81JazYpVc7MPAIsZu2nZjFysNSpTeDawe46pwZrlEO6NWaxmnlXiPWeUiR00UhLhLKWP');
 
 
 // Lấy thông tin từ URL
@@ -13,6 +15,29 @@ $hoten = $_GET['hoten'] ?? '';
 $email = $_GET['email'] ?? '';
 $checkin = $_GET['checkin'] ?? '';
 $checkout = $_GET['checkout'] ?? '';
+$madatphong = $_GET['madatphong'] ?? '';
+
+//truy xuất thông tin giao dịch
+$session_id =$_GET['session_id'];//truy suất thông tin giao dịch
+$session = \Stripe\Checkout\Session::retrieve($session_id);
+$payment_intent =\stripe\PaymentIntent::retrieve($session->payment_intent);
+//truy xuấtvà tự sinh mã cho thanh toán
+$lastId = $conn->insert_id;
+$maThanhToan = 'TT' . str_pad($lastId, 3, '0', STR_PAD_LEFT);
+$trangthai =$payment_intent->status;
+$sotien =$payment_intent->amount_received /100;
+$phuongthuc =$payment_intent->payment_method_types[0];
+$ngaythanhtoans = date("Y-m-d");
+//import csdl
+$sql ="insert into thanhtoan(MaThanhToan,PhuongThuc,SoTien,NgayThanhToan,TrangThai,MaDatPhong)
+ values(?,?,?,?,?,?)";
+ $stmt =$conn->prepare($sql);
+ $stmt->bind_param("ssdsss",$maThanhToan,$phuongthuc,$sotien,$ngaythanhtoans,$trangthai,$madatphong);
+if($stmt->execute())
+{
+ error_log("thanh toán thành công");
+}
+
 
 // Sinh QR Code
 $qrData = "Phòng: $maphong\nKhách: $hoten\nCheck-in: $checkin\nCheck-out: $checkout";

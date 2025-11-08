@@ -5,6 +5,7 @@ include('db_connect.php');
 $maphong  = $_GET['room'] ?? null;
 $checkin  = $_GET['checkin'] ?? null;
 $checkout = $_GET['checkout'] ?? null;
+$songuoi = $_GET['songuoi'] ?? null;
 
 if (!$maphong) {
     die("<h3 style='color:red; text-align:center; margin-top:50px;'>Không tìm thấy phòng!</h3>");
@@ -41,8 +42,9 @@ if (!$room) {
       <input type="hidden" name="maphong" value="<?= $maphong ?>">
       <input type="hidden" name="checkin" value="<?= $checkin ?>">
       <input type="hidden" name="checkout" value="<?= $checkout ?>">
+      <input type="hidden" name="songuoi" value="<?= $songuoi ?>">
       <input type="hidden" name="gia" value="<?= $room['Gia'] ?>">
-
+      
       <div class="mb-3">
         <label for="hoten" class="form-label">Họ và tên</label>
         <input type="text" name="hoten" id="hoten" class="form-control" required>
@@ -51,6 +53,10 @@ if (!$room) {
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" name="email" id="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="sodienthoai" class="form-label">Số Điện Thoại</label>
+        <input type="number" name="sdt" id="sdt" class="form-control" required>
       </div>
 
       <button type="submit" class="btn btn-success w-100">Thanh toán ngay</button>
