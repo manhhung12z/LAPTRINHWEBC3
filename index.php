@@ -13,7 +13,7 @@ $loaiphong_rs = $conn->query($loaiphong_sql);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="stylechung.css" />
 <style>
 body {
   background-color: #f8f9fa;
@@ -336,11 +336,69 @@ footer {
     <?php endif; ?>
   </div>
 </section>
+<footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Hỗ trợ</h3>
+          <ul>
+            <li><a href="#">Quản lí các chuyến đi của bạn</a></li>
+            <li><a href="#">Liên hệ Dịch vụ Khách hàng</a></li>
+            <li><a href="#">Trung tâm thông tin bảo mật</a></li>
+          </ul>
+        </div>
 
+        <div class="footer-column">
+          <h3>Khám phá thêm</h3>
+          <ul>
+            <li><a href="#">Chương trình khách hàng thân thiết Genius</a></li>
+            <li><a href="#">Ưu đãi theo mùa và dịp lễ</a></li>
+            <li><a href="#">Bài viết về du lịch</a></li>
+            <li><a href="#">Booking.com dành cho Doanh Nghiệp</a></li>
+            <li><a href="#">Traveller Review Awards</a></li>
+            <li><a href="#">Cho thuê xe hơi</a></li>
+            <li><a href="#">Tìm chuyến bay</a></li>
+            <li><a href="#">Đặt nhà hàng</a></li>
+            <li><a href="#">Booking.com dành cho Đại Lý Du Lịch</a></li>
+          </ul>
+        </div>
 
-<footer>
-  © 2025 Hotel Booking System — Đặt phòng nhanh chóng & an toàn
-</footer>
+        <div class="footer-column">
+          <h3>Điều khoản và cài đặt</h3>
+          <ul>
+            <li><a href="#">Bảo mật & Cookie</a></li>
+            <li><a href="#">Điều khoản dịch vụ</a></li>
+            <li><a href="#">Chính sách về Khả năng tiếp cận</a></li>
+            <li><a href="#">Tranh chấp đối tác</a></li>
+            <li><a href="#">Chính sách chống Nô lệ Hiện đại</a></li>
+            <li><a href="#">Chính sách về Quyền con người</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Dành cho đối tác</h3>
+          <ul>
+            <li><a href="#">Đăng nhập vào trang Extranet</a></li>
+            <li><a href="#">Trợ giúp đối tác</a></li>
+            <li><a href="#">Đăng chỗ nghỉ của Quý vị</a></li>
+            <li><a href="#">Trở thành đối tác phân phối</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Về chúng tôi</h3>
+          <ul>
+            <li><a href="#">Về Booking.com</a></li>
+            <li><a href="#">Chúng tôi hoạt động như thế nào</a></li>
+            <li><a href="#">Du lịch bền vững</a></li>
+            <li><a href="#">Truyền thông</a></li>
+            <li><a href="#">Cơ hội việc làm</a></li>
+            <li><a href="#">Quan hệ cổ đông</a></li>
+            <li><a href="#">Liên hệ công ty</a></li>
+            <li><a href="#">Hướng dẫn và cáo báo nội dung</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
